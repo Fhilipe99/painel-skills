@@ -21,6 +21,7 @@
     --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
   }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; line-height: 1.6; }
+
   .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; gap: 12px; }
   .topbar-left { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
   .logo-mark { width: 28px; height: 28px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-fg); font-weight: 500; }
@@ -33,21 +34,27 @@
   .sync-dot.loading { background: var(--amber); animation: pulse 1s infinite; }
   .sync-dot.error { background: var(--red); }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
   .btn-sm { border: 1px solid var(--border-strong); background: transparent; border-radius: 7px; padding: 5px 14px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--text-muted); cursor: pointer; transition: all 0.15s; font-weight: 500; }
   .btn-sm:hover { background: var(--surface2); color: var(--text); }
   .btn-danger { color: var(--red); border-color: #F5B8B8; }
   .btn-danger:hover { background: var(--red-bg); color: var(--red); }
   .btn-accent { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
   .btn-accent:hover { opacity: 0.85; color: var(--accent-fg); background: var(--accent); }
+
   .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+
   .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 1.75rem; }
   .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
   .stat-label { font-size: 11px; font-weight: 500; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
   .stat-value { font-size: 26px; font-weight: 600; color: var(--text); font-family: 'DM Mono', monospace; }
   .stat-value.red { color: var(--red); }
   .stat-value.green { color: var(--green); }
+
   .conflict-banner { background: var(--red-bg); border: 1px solid #F5B8B8; border-radius: var(--radius); padding: 10px 16px; font-size: 13px; color: var(--red); margin-bottom: 1.25rem; display: none; align-items: flex-start; gap: 8px; }
   .conflict-banner.show { display: flex; }
+  .conflict-banner a { color: var(--red); font-weight: 600; text-decoration: underline; cursor: pointer; }
+
   .toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
   .filter-pill { border: 1px solid var(--border-strong); background: transparent; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--text-muted); cursor: pointer; transition: all 0.15s; font-weight: 500; }
   .filter-pill:hover { background: var(--surface2); color: var(--text); }
@@ -57,11 +64,13 @@
   .search-wrap input { width: 100%; padding: 7px 12px 7px 32px; border: 1px solid var(--border-strong); border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; background: var(--surface); color: var(--text); outline: none; transition: border 0.15s; }
   .search-wrap input:focus { border-color: var(--accent); }
   .search-wrap input::placeholder { color: var(--text-faint); }
+
   .team-section { margin-bottom: 2rem; }
   .team-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
   .team-dot { width: 8px; height: 8px; border-radius: 50%; }
   .team-name { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
   .team-count { font-size: 11px; color: var(--text-faint); font-family: 'DM Mono', monospace; }
+
   .members-grid { display: flex; flex-direction: column; gap: 8px; }
   .member-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow); transition: border-color 0.15s, box-shadow 0.15s; }
   .member-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
@@ -76,12 +85,14 @@
   .slot-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--border-strong); transition: all 0.2s; }
   .slot-dot.filled { border-color: transparent; }
   .slot-dot.conflict-dot { background: var(--red) !important; border-color: transparent; }
+
   .card-body { margin-top: 10px; }
   .skills-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
   .skill-chip { display: inline-flex; align-items: center; gap: 5px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 12px; font-weight: 500; }
   .skill-chip.conflict-chip { background: var(--red-bg); border-color: #F5B8B8; color: var(--red); }
   .skill-chip button { background: none; border: none; cursor: pointer; padding: 0; color: var(--text-faint); display: flex; align-items: center; transition: color 0.1s; font-size: 14px; line-height: 1; }
   .skill-chip button:hover { color: var(--red); }
+
   .add-row { display: flex; gap: 6px; }
   .add-row input { flex: 1; padding: 6px 12px; border: 1px dashed var(--border-strong); border-radius: 7px; font-family: 'DM Sans', sans-serif; font-size: 12px; background: var(--bg); color: var(--text); outline: none; transition: border 0.15s; }
   .add-row input:focus { border-color: var(--accent); border-style: solid; background: var(--surface); }
@@ -89,19 +100,38 @@
   .add-row button { background: var(--accent); color: var(--accent-fg); border: none; border-radius: 7px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; white-space: nowrap; }
   .add-row button:hover { opacity: 0.8; }
   .full-badge { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 4px; font-weight: 500; }
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 200; align-items: center; justify-content: center; }
+
+  .suggestion-row { margin-top: 8px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .suggestion-label { font-size: 12px; color: var(--text-faint); }
+  .suggestion-btn { display: inline-flex; align-items: center; gap: 5px; background: var(--surface2); border: 1px solid var(--border-strong); border-radius: 6px; padding: 4px 10px; font-size: 12px; color: var(--text); cursor: pointer; transition: all 0.15s; font-weight: 500; }
+  .suggestion-btn:hover { background: var(--surface); border-color: var(--accent); color: var(--accent); }
+  .suggestion-btn svg { flex-shrink: 0; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
   .modal-overlay.show { display: flex; }
-  .modal { background: var(--surface); border-radius: var(--radius-lg); padding: 1.5rem; width: 460px; max-width: 92vw; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-  .modal h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-  .modal p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
-  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
+  .modal { background: var(--surface); border-radius: var(--radius-lg); width: 480px; max-width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; }
+  .modal-header { padding: 1.25rem 1.5rem 1rem; border-bottom: 1px solid var(--border); }
+  .modal-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--green-bg); color: #085041; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+  .modal-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
+  .modal-owner { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+  .modal-body { padding: 1.25rem 1.5rem; }
+  .modal-section-label { font-size: 11px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .modal-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem; }
+  .triggers-list { display: flex; flex-wrap: wrap; gap: 5px; }
+  .trigger-pill { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; font-size: 12px; color: var(--text-muted); }
+  .modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
+
+  /* LOADING */
   .loading-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 500; }
   .spinner { width: 28px; height: 28px; border: 2px solid var(--border-strong); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-text { font-size: 13px; color: var(--text-muted); }
+
   .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 300; background: var(--text); color: var(--accent-fg); border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 500; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(6px); transition: all 0.25s; pointer-events: none; max-width: 340px; }
   .toast.show { opacity: 1; transform: translateY(0); }
   .empty { text-align: center; padding: 3rem 1rem; color: var(--text-faint); font-size: 14px; }
+
   .dot-onboarding{background:#378ADD} .dot-mia{background:#1D9E75} .dot-cs{background:#EF9F27} .dot-suporte{background:#D85A30} .dot-coord{background:#7F77DD}
   .av-onboarding{background:#E6EFFA;color:#185FA5} .av-mia{background:#E3F5ED;color:#1D7A4F} .av-cs{background:#FFF3D6;color:#8A5C00} .av-suporte{background:#FAECE7;color:#8A3820} .av-coord{background:#EEEDFE;color:#534AB7}
   .slot-onboarding.filled{background:#378ADD} .slot-mia.filled{background:#1D9E75} .slot-cs.filled{background:#EF9F27} .slot-suporte.filled{background:#D85A30} .slot-coord.filled{background:#7F77DD}
@@ -127,7 +157,7 @@
       <span id="sync-label">Conectando...</span>
     </div>
     <button class="btn-sm" onclick="fetchData()">↻ Atualizar</button>
-    <button class="btn-sm btn-danger" onclick="openClearModal()">Limpar tudo</button>
+    <button class="btn-sm btn-danger" onclick="openModal('clear-modal')">Limpar tudo</button>
   </div>
 </div>
 
@@ -141,7 +171,7 @@
       <button class="filter-pill" onclick="setFilter('MIA Service',this)">MIA Service</button>
       <button class="filter-pill" onclick="setFilter('CS',this)">CS</button>
       <button class="filter-pill" onclick="setFilter('Suporte',this)">Suporte</button>
-      <button class="filter-pill" onclick="setFilter('Coordenação',this)">Coordenação</button>
+      <button class="filter-pill" onclick="setFilter('Coordenacao',this)">Coordenação</button>
     </div>
     <div class="search-wrap">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -151,22 +181,55 @@
   <div id="main-area"></div>
 </div>
 
+<!-- Modal: Skill suggestion -->
+<div class="modal-overlay" id="skill-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-badge">✦ Skill sugerida</div>
+      <div class="modal-title" id="skill-modal-title"></div>
+      <div class="modal-owner" id="skill-modal-owner"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section-label">O que esta skill faz</div>
+      <div class="modal-desc" id="skill-modal-desc"></div>
+      <div class="modal-section-label">Quando o Claude a usa</div>
+      <div class="triggers-list" id="skill-modal-triggers"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-sm" onclick="closeModal('skill-modal')">Cancelar</button>
+      <button class="btn-sm btn-accent" id="skill-modal-download" onclick="downloadAndAdd()">
+        ↓ Baixar .md e adicionar ao painel
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Conflito -->
 <div class="modal-overlay" id="conflict-modal">
   <div class="modal">
-    <h2>Skill duplicada</h2>
-    <p id="conflict-msg"></p>
-    <div class="modal-actions">
+    <div class="modal-header">
+      <div class="modal-title">Skill duplicada</div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="conflict-msg"></p>
+    </div>
+    <div class="modal-footer">
       <button class="btn-sm" onclick="closeModal('conflict-modal')">Cancelar</button>
       <button class="btn-sm btn-accent" id="conflict-confirm">Registrar mesmo assim</button>
     </div>
   </div>
 </div>
 
+<!-- Modal: Limpar -->
 <div class="modal-overlay" id="clear-modal">
   <div class="modal">
-    <h2>Limpar todas as skills?</h2>
-    <p>Remove todas as skills de todos os colaboradores. Esta ação não pode ser desfeita.</p>
-    <div class="modal-actions">
+    <div class="modal-header">
+      <div class="modal-title">Limpar todas as skills?</div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc">Remove todas as skills de todos os colaboradores. Esta ação não pode ser desfeita.</p>
+    </div>
+    <div class="modal-footer">
       <button class="btn-sm" onclick="closeModal('clear-modal')">Cancelar</button>
       <button class="btn-sm btn-danger" onclick="clearAll()">Confirmar</button>
     </div>
@@ -176,7 +239,6 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────
 const GH_TOKEN  = localStorage.getItem('predize_gh_token') || '';
 const GH_OWNER  = 'fhilipe99';
 const GH_REPO   = 'painel-skills';
@@ -199,19 +261,301 @@ const MEMBERS_DEFAULT = [
   { id:11, name:'Higor',        role:'Coordenador de Servicos', team:'Coordenacao' }
 ];
 
-// Sugestão de skill inicial por colaborador (única por pessoa)
 const SKILL_SUGGESTIONS = {
-  1:  'Configuração de fluxo de onboarding',   // Jose Alberto
-  2:  'Gestão de expectativas do cliente',      // Amanda Muniz
-  3:  'Diagnóstico de integrações de marketplace', // Paulo Sergio
-  4:  'Curadoria de contextos MIA',             // Rose
-  5:  'Análise de redução de esforço MIA',      // Fhilipe
-  6:  'Gestão de relacionamento pós-venda',     // Aline
-  7:  'Mapeamento de jornada do cliente',       // Carol
-  8:  'Resolução de disputas em marketplace',   // Joao
-  9:  'Monitoramento de SLA',                   // Natalia
-  10: 'Triagem e priorização de chamados',      // Isadora
-  11: 'Gestão de indicadores de serviço'        // Higor
+  1: {
+    name: 'Configuracao de fluxo de onboarding',
+    desc: 'Orienta o Claude a estruturar e revisar fluxos de implantacao de clientes na plataforma Predize, mapeando etapas, dependencias e pontos de atencao para garantir uma ativacao eficiente e sem retrabalho.',
+    triggers: ['fluxo de onboarding','implantacao de cliente','ativacao','etapas de onboarding','configuracao inicial'],
+    file: `---
+name: configuracao-fluxo-onboarding
+description: >
+  Use esta skill quando o usuario precisar estruturar, revisar ou documentar
+  fluxos de implantacao de clientes na plataforma Predize. Gatilhos: fluxo de
+  onboarding, implantacao de cliente, ativacao, etapas de configuracao inicial.
+---
+
+# Configuracao de fluxo de onboarding — Predize
+
+## Objetivo
+Estruturar e revisar fluxos de implantacao de novos clientes na plataforma Predize,
+garantindo ativacao eficiente, sem retrabalho e com expectativas alinhadas.
+
+## Como usar
+Descreva o cenario do cliente (segmento, marketplaces, volume de pedidos) e
+solicite ao Claude que mapeie as etapas de onboarding, dependencias tecnicas
+e pontos criticos de atencao.
+
+## Boas praticas
+- Sempre verificar integracao com marketplace antes de ativar MIA
+- Documentar configuracoes realizadas em cada etapa
+- Alinhar SLA de resposta com o cliente antes da ativacao
+`
+  },
+  2: {
+    name: 'Gestao de expectativas do cliente',
+    desc: 'Instrui o Claude a identificar gaps entre expectativas do cliente e capacidades reais da plataforma, sugerindo abordagens de comunicacao assertiva para alinhar escopo, prazo e entrega durante o onboarding.',
+    triggers: ['expectativas do cliente','alinhamento de escopo','comunicacao com cliente','gestao de expectativas','insatisfacao'],
+    file: `---
+name: gestao-expectativas-cliente
+description: >
+  Use esta skill para identificar e gerenciar gaps entre expectativas do cliente
+  e capacidades da plataforma Predize. Gatilhos: expectativas do cliente,
+  alinhamento de escopo, comunicacao assertiva, insatisfacao no onboarding.
+---
+
+# Gestao de expectativas do cliente
+
+## Objetivo
+Identificar discrepancias entre o que o cliente espera e o que a plataforma
+entrega, propondo comunicacoes claras e solucoes alternativas.
+
+## Como usar
+Descreva a situacao (o que o cliente espera, o que a plataforma faz) e
+solicite ao Claude que sugira como comunicar limitacoes e propor alternativas.
+
+## Boas praticas
+- Seja direto sobre limitacoes sem criar ansiedade
+- Sempre oferecer uma alternativa ao negar uma funcionalidade
+- Documentar acordos de escopo por escrito
+`
+  },
+  3: {
+    name: 'Diagnostico de integracoes de marketplace',
+    desc: 'Habilita o Claude a analisar problemas de integracao entre a plataforma Predize e marketplaces como Mercado Livre, Amazon, Magalu e outros, identificando causas raiz e sugerindo acoes corretivas.',
+    triggers: ['integracao','marketplace','erro de integracao','diagnostico','Mercado Livre','Amazon','Magalu'],
+    file: `---
+name: diagnostico-integracoes-marketplace
+description: >
+  Use esta skill para analisar e diagnosticar problemas de integracao entre
+  Predize e marketplaces. Gatilhos: integracao, erro de integracao, diagnostico,
+  Mercado Livre, Amazon, Magalu, Shopee, Casas Bahia.
+---
+
+# Diagnostico de integracoes de marketplace
+
+## Objetivo
+Identificar causas raiz de falhas de integracao e sugerir acoes corretivas
+para cada marketplace suportado pelo Predize.
+
+## Como usar
+Descreva o problema observado (mensagens nao chegando, status incorreto,
+pedidos nao sincronizando) e o marketplace envolvido.
+
+## Marketplaces suportados
+Mercado Livre, Amazon, Magalu, Shopee, Casas Bahia, Carrefour, TikTok, WhatsApp, VTEX
+`
+  },
+  4: {
+    name: 'Curadoria de contextos MIA',
+    desc: 'Instrui o Claude a revisar, corrigir e aprimorar contextos configurados na MIA, verificando coerencia das respostas, ausencia de conflitos entre contextos similares e aderencia as regras operacionais de pre-venda, pos-venda e chat.',
+    triggers: ['curadoria','contexto MIA','revisar contexto','conflito de contexto','pre-venda','pos-venda','chat'],
+    file: `---
+name: curadoria-contextos-mia
+description: >
+  Use esta skill para revisar, corrigir e melhorar contextos da MIA. Gatilhos:
+  curadoria, contexto MIA, revisar contexto, conflito de contexto, pre-venda,
+  pos-venda, chat, resposta incorreta da MIA.
+---
+
+# Curadoria de contextos MIA
+
+## Objetivo
+Revisar e aprimorar contextos configurados na MIA garantindo coerencia,
+ausencia de conflitos e aderencia as regras operacionais.
+
+## Regras por frente
+| Frente    | Regras                                                                 |
+|-----------|------------------------------------------------------------------------|
+| Pre-venda | Le descricao e ficha tecnica; nao le titulo nem fotos                  |
+| Pos-venda | Usa apenas contexto da loja; nao analisa pedido junto ao produto       |
+| Chat      | Mesmas regras do pos-venda                                             |
+
+## Como usar
+Compartilhe o nome do contexto, a situacao em que o cliente vai usar e a
+resposta da MIA. Claude verificara coerencia e conflitos com contextos similares.
+`
+  },
+  5: {
+    name: 'Analise de reducao de esforco MIA',
+    desc: 'Instrui o Claude a calcular e interpretar o KPI de Reducao de Esforco da MIA — definido como (mensagens enviadas pela MIA) / (mensagens MIA + mensagens manuais) x 100 — a partir de planilhas de volume, identificando tendencias e oportunidades de melhoria.',
+    triggers: ['reducao de esforco','KPI MIA','planilha de mensagens','analise de volume','desempenho MIA','mensagens manuais'],
+    file: `---
+name: analise-reducao-esforco-mia
+description: >
+  Use esta skill para calcular e interpretar o KPI de Reducao de Esforco da MIA
+  a partir de planilhas de volume de mensagens. Gatilhos: reducao de esforco,
+  KPI MIA, planilha de mensagens, analise de volume, desempenho MIA.
+---
+
+# Analise de reducao de esforco MIA
+
+## Formula principal
+Reducao de Esforco = (Mensagens MIA) / (Mensagens MIA + Mensagens Manuais) x 100
+
+## Objetivo
+Calcular, monitorar e interpretar o principal KPI operacional da MIA,
+identificando tendencias, anomalias e oportunidades de melhoria.
+
+## Como usar
+Compartilhe a planilha ou os dados de volume de mensagens. Claude calculara
+o KPI, comparara periodos e apontara variacoes relevantes com contexto operacional.
+
+## Interpretacao
+- Acima de 70%: desempenho alto
+- Entre 40-70%: margem de melhoria via curadoria
+- Abaixo de 40%: revisar contextos e cota mensal
+`
+  },
+  6: {
+    name: 'Gestao de relacionamento pos-venda',
+    desc: 'Orienta o Claude a estruturar abordagens de relacionamento com clientes em situacoes de pos-venda, incluindo tratamento de reclamacoes, followup de satisfacao e retencao, com foco em marketplaces.',
+    triggers: ['pos-venda','relacionamento','reclamacao','satisfacao do cliente','retencao','followup'],
+    file: `---
+name: gestao-relacionamento-pos-venda
+description: >
+  Use esta skill para estruturar abordagens de relacionamento pos-venda em
+  marketplaces. Gatilhos: pos-venda, relacionamento, reclamacao, satisfacao
+  do cliente, retencao, followup, CS.
+---
+
+# Gestao de relacionamento pos-venda
+
+## Objetivo
+Estruturar abordagens eficazes de relacionamento com clientes apos a compra,
+reduzindo reclamacoes e aumentando satisfacao em marketplaces.
+
+## Como usar
+Descreva a situacao do cliente (status do pedido, historico de contato,
+tom da mensagem) e solicite orientacao de abordagem.
+`
+  },
+  7: {
+    name: 'Mapeamento de jornada do cliente',
+    desc: 'Habilita o Claude a mapear e documentar a jornada completa do cliente em marketplaces atendidos pelo Predize, identificando pontos de fricao, momentos de verdade e oportunidades de melhoria na experiencia.',
+    triggers: ['jornada do cliente','mapeamento','experiencia do cliente','pontos de fricao','touchpoints'],
+    file: `---
+name: mapeamento-jornada-cliente
+description: >
+  Use esta skill para mapear e documentar a jornada do cliente em marketplaces
+  Predize. Gatilhos: jornada do cliente, mapeamento, experiencia, pontos de
+  fricao, touchpoints, CS.
+---
+
+# Mapeamento de jornada do cliente
+
+## Objetivo
+Mapear a experiencia completa do cliente desde a descoberta ate o pos-venda,
+identificando fricoes e oportunidades de melhoria.
+
+## Como usar
+Informe o marketplace, o tipo de produto e o perfil do cliente. Claude mapeara
+as etapas da jornada com pontos criticos e recomendacoes.
+`
+  },
+  8: {
+    name: 'Resolucao de disputas em marketplace',
+    desc: 'Instrui o Claude a analisar casos de disputas, reclamacoes e mediacoes em marketplaces como Mercado Livre e Amazon, sugerindo argumentos, documentos e abordagens para resolucao favoravel.',
+    triggers: ['disputa','reclamacao','mediacao','Mercado Livre','Amazon','caso','resolucao'],
+    file: `---
+name: resolucao-disputas-marketplace
+description: >
+  Use esta skill para analisar e resolver disputas em marketplaces. Gatilhos:
+  disputa, reclamacao, mediacao, Mercado Livre, Amazon, caso, resolucao
+  de conflito, CS.
+---
+
+# Resolucao de disputas em marketplace
+
+## Objetivo
+Analisar casos de disputas e reclamacoes em marketplaces, sugerindo argumentos
+e abordagens para resolucao favoravel ao vendedor.
+
+## Como usar
+Descreva o caso (marketplace, motivo da disputa, historico de mensagens)
+e solicite analise e estrategia de resposta.
+`
+  },
+  9: {
+    name: 'Monitoramento de SLA',
+    desc: 'Instrui o Claude a acompanhar, calcular e alertar sobre prazos de SLA em atendimentos de marketplace, identificando tickets em risco de vencimento e priorizando acoes da equipe de CS.',
+    triggers: ['SLA','prazo','vencimento','ticket em risco','monitoramento','priorizacao'],
+    file: `---
+name: monitoramento-sla
+description: >
+  Use esta skill para monitorar e calcular SLAs de atendimento em marketplaces.
+  Gatilhos: SLA, prazo, vencimento, ticket em risco, monitoramento, priorizacao,
+  CS.
+---
+
+# Monitoramento de SLA
+
+## Objetivo
+Acompanhar prazos de atendimento, identificar tickets em risco de vencimento
+e priorizar acoes da equipe de CS.
+
+## Como usar
+Compartilhe a lista de tickets com datas de abertura e marketplace. Claude
+calculara o SLA restante e priorizara por urgencia.
+`
+  },
+  10: {
+    name: 'Triagem e priorizacao de chamados',
+    desc: 'Habilita o Claude a classificar e priorizar chamados de suporte com base em criticidade, impacto e urgencia, sugerindo ordem de atendimento e escalacao quando necessario.',
+    triggers: ['triagem','priorizacao','chamado','suporte','escalonamento','criticidade','urgencia'],
+    file: `---
+name: triagem-priorizacao-chamados
+description: >
+  Use esta skill para classificar e priorizar chamados de suporte. Gatilhos:
+  triagem, priorizacao, chamado, suporte, escalonamento, criticidade, urgencia.
+---
+
+# Triagem e priorizacao de chamados
+
+## Objetivo
+Classificar chamados de suporte por criticidade e urgencia, sugerindo ordem
+de atendimento e quando escalar.
+
+## Criterios de priorizacao
+1. Impacto no cliente (numero de usuarios afetados)
+2. Urgencia (prazo de SLA)
+3. Complexidade tecnica
+4. Risco de churn
+
+## Como usar
+Liste os chamados abertos com descricao e contexto. Claude classificara
+e sugerira ordem de atendimento.
+`
+  },
+  11: {
+    name: 'Gestao de indicadores de servico',
+    desc: 'Instrui o Claude a compilar, analisar e apresentar indicadores operacionais do time de servicos (reducao de esforco MIA, SLA, volume de atendimentos, satisfacao), gerando visoes gerenciais e identificando tendencias.',
+    triggers: ['indicadores','metricas','dashboard','KPI','gestao','relatorio gerencial','servicos'],
+    file: `---
+name: gestao-indicadores-servico
+description: >
+  Use esta skill para compilar e analisar indicadores operacionais do time de
+  servicos Predize. Gatilhos: indicadores, metricas, dashboard, KPI, gestao,
+  relatorio gerencial, servicos, coordenacao.
+---
+
+# Gestao de indicadores de servico
+
+## Objetivo
+Compilar, analisar e apresentar indicadores operacionais do time de servicos,
+gerando visoes gerenciais e identificando tendencias.
+
+## Indicadores cobertos
+- Reducao de esforco MIA
+- SLA medio de atendimento
+- Volume de atendimentos por canal
+- Taxa de resolucao no primeiro contato
+- Satisfacao do cliente (CSAT)
+
+## Como usar
+Compartilhe os dados do periodo (planilha ou numeros) e o publico do relatorio.
+Claude estruturara a analise com contexto e recomendacoes.
+`
+  }
 };
 
 const TEAM_META = {
@@ -219,40 +563,35 @@ const TEAM_META = {
   'MIA Service':{dot:'dot-mia',        av:'av-mia',       slot:'slot-mia'       },
   'CS':         {dot:'dot-cs',         av:'av-cs',        slot:'slot-cs'        },
   'Suporte':    {dot:'dot-suporte',    av:'av-suporte',   slot:'slot-suporte'   },
-  'Coordenação':{dot:'dot-coord',      av:'av-coord',     slot:'slot-coord'     }
+  'Coordenacao':{dot:'dot-coord',      av:'av-coord',     slot:'slot-coord'     }
 };
-const TEAM_ORDER = ['Onboarding','MIA Service','CS','Suporte','Coordenação'];
+const TEAM_ORDER = ['Onboarding','MIA Service','CS','Suporte','Coordenacao'];
+const TEAM_LABELS = {'Onboarding':'Onboarding','MIA Service':'MIA Service','CS':'CS','Suporte':'Suporte','Coordenacao':'Coordenação'};
 
 let state   = [];
 let fileSha = '';
 let activeFilter = 'all';
 let pollTimer    = null;
+let pendingSuggestion = null;
 
 let ghHeaders = {
-  'Authorization': 'token ' + GH_TOKEN,
+  'Authorization': 'token ' + (localStorage.getItem('predize_gh_token') || ''),
   'Accept': 'application/vnd.github.v3+json',
   'Content-Type': 'application/json'
 };
 
-// ── GITHUB API ────────────────────────────────────────────────
 async function fetchData(silent) {
   if (!silent) setSyncStatus('loading', 'Sincronizando...');
   try {
     const res = await fetch(API_BASE + '?t=' + Date.now(), { headers: ghHeaders });
-
-    if (res.status === 404) {
-      // Arquivo ainda não existe — cria com dados padrão
-      await initFile();
-      return;
-    }
-
+    if (res.status === 401) { showTokenScreen(); return; }
+    if (res.status === 404) { await initFile(); return; }
     const json = await res.json();
     fileSha = json.sha || '';
     const raw = (json.content || '').replace(/[\s\n\r]/g, '');
     const content = raw ? JSON.parse(decodeURIComponent(escape(atob(raw)))) : null;
     if (!content || !content.members) { await initFile(); return; }
     state = content.members;
-
     const now = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
     setSyncStatus('ok', 'Atualizado ' + now);
     hideLoading();
@@ -275,7 +614,7 @@ async function initFile() {
   try {
     const res = await fetch(API_BASE, { method: 'PUT', headers: ghHeaders, body: JSON.stringify(body) });
     const json = await res.json();
-    fileSha = (json.content && json.content.sha) ? json.content.sha : (json.commit ? json.commit.sha : '');
+    fileSha = (json.content && json.content.sha) ? json.content.sha : '';
     state   = data.members;
     setSyncStatus('ok', 'Banco criado');
     hideLoading();
@@ -284,7 +623,7 @@ async function initFile() {
   } catch(e) {
     setSyncStatus('error', 'Erro ao criar banco');
     hideLoading();
-    showToast('Erro ao criar arquivo no GitHub: ' + e.message);
+    showToast('Erro ao criar arquivo: ' + e.message);
   }
 }
 
@@ -298,17 +637,14 @@ async function saveState(msg) {
   };
   try {
     const res = await fetch(API_BASE, { method: 'PUT', headers: ghHeaders, body: JSON.stringify(body) });
-    const json = await res.json();
-    if (!res.ok) {
-      // sha desatualizado — busca o sha atual e tenta de novo
-      if (res.status === 409 || res.status === 422) {
-        const fresh = await fetch(API_BASE + '?t=' + Date.now(), { headers: ghHeaders });
-        const freshJson = await fresh.json();
-        fileSha = freshJson.sha || fileSha;
-        return await saveState(msg); // retry com sha atualizado
-      }
-      throw new Error(json.message || ('HTTP ' + res.status));
+    if (res.status === 409 || res.status === 422) {
+      const fresh = await fetch(API_BASE + '?t=' + Date.now(), { headers: ghHeaders });
+      const freshJson = await fresh.json();
+      fileSha = freshJson.sha || fileSha;
+      return await saveState(msg);
     }
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message || 'HTTP ' + res.status);
     fileSha = (json.content && json.content.sha) ? json.content.sha : fileSha;
     const now = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
     setSyncStatus('ok', 'Salvo ' + now);
@@ -325,7 +661,41 @@ function startPolling() {
   pollTimer = setInterval(() => fetchData(true), POLL_MS);
 }
 
-// ── UI ────────────────────────────────────────────────────────
+function showTokenScreen() {
+  document.getElementById('loading-screen').innerHTML = `
+    <div style="background:#fff;border-radius:14px;padding:2rem;width:460px;max-width:92vw;box-shadow:0 4px 24px rgba(0,0,0,0.1);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+        <div style="width:28px;height:28px;background:#1A1917;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:11px;color:#F5F4F0;font-weight:500;">SK</div>
+        <span style="font-size:15px;font-weight:600;color:#1A1917;">Painel de Skills — Predize</span>
+      </div>
+      <p style="font-size:13px;color:#6B6963;margin-bottom:4px;">Cole seu GitHub Personal Access Token para conectar ao banco de dados.</p>
+      <p style="font-size:12px;color:#A8A59F;margin-bottom:1rem;">O token fica salvo apenas neste navegador.</p>
+      <input type="password" id="token-input" placeholder="ghp_..."
+        style="width:100%;padding:9px 12px;border:1px solid rgba(0,0,0,0.16);border-radius:7px;font-family:monospace;font-size:13px;color:#1A1917;outline:none;margin-bottom:10px;"
+        onkeydown="if(event.key==='Enter') saveToken()" />
+      <button onclick="saveToken()"
+        style="width:100%;background:#1A1917;color:#F5F4F0;border:none;border-radius:7px;padding:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">
+        Conectar
+      </button>
+      <p id="token-error" style="font-size:12px;color:#B83232;margin-top:8px;display:none;">Token inválido. Verifique e tente novamente.</p>
+    </div>`;
+  document.getElementById('loading-screen').style.display = 'flex';
+}
+
+async function saveToken() {
+  const input = document.getElementById('token-input');
+  if (!input) return;
+  const val = input.value.trim();
+  if (!val.startsWith('ghp_') && !val.startsWith('github_pat_')) {
+    document.getElementById('token-error').style.display = 'block';
+    return;
+  }
+  localStorage.setItem('predize_gh_token', val);
+  ghHeaders['Authorization'] = 'token ' + val;
+  document.getElementById('loading-screen').innerHTML = '<div class="spinner"></div><div class="loading-text">Conectando...</div>';
+  fetchData();
+}
+
 function setSyncStatus(s, label) {
   document.getElementById('sync-dot').className = 'sync-dot ' + s;
   document.getElementById('sync-label').textContent = label;
@@ -336,13 +706,8 @@ function showToast(msg, dur=3500) {
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), dur);
 }
-function openClearModal()  { document.getElementById('clear-modal').classList.add('show'); }
-function closeModal(id)    { document.getElementById(id).classList.remove('show'); }
-function openConflictModal(msg, onConfirm) {
-  document.getElementById('conflict-msg').innerHTML = msg;
-  document.getElementById('conflict-confirm').onclick = () => { closeModal('conflict-modal'); onConfirm(); };
-  document.getElementById('conflict-modal').classList.add('show');
-}
+function openModal(id)  { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 function setCardSaving(id, saving) {
   const c = document.getElementById('card-' + id);
   if (c) c.classList.toggle('saving', saving);
@@ -354,19 +719,21 @@ function setFilter(team, btn) {
   btn.classList.add('active'); render();
 }
 
-function useSuggestion(memberId) {
-  const input = document.getElementById('inp-' + memberId);
-  if (input) {
-    input.value = SKILL_SUGGESTIONS[memberId] || '';
-    input.focus();
-  }
+function getAllSkillsMap() {
+  const map = {};
+  state.forEach(m => m.skills.forEach(s => {
+    const k = s.toLowerCase().trim();
+    if (!map[k]) map[k] = [];
+    if (!map[k].includes(m.name)) map[k].push(m.name);
+  }));
+  return map;
 }
+function getConflicts() { return Object.entries(getAllSkillsMap()).filter(([,n])=>n.length>1); }
 
 function scrollToCard(memberId) {
-  // Garante que o filtro está em "Todos" para o card aparecer
   if (activeFilter !== 'all') {
     activeFilter = 'all';
-    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
     document.querySelector('.filter-pill[onclick*="all"]').classList.add('active');
     render();
   }
@@ -381,17 +748,56 @@ function scrollToCard(memberId) {
   }, 100);
 }
 
-// ── LÓGICA ────────────────────────────────────────────────────
-function getAllSkillsMap() {
-  const map = {};
-  state.forEach(m => m.skills.forEach(s => {
-    const k = s.toLowerCase().trim();
-    if (!map[k]) map[k] = [];
-    if (!map[k].includes(m.name)) map[k].push(m.name);
-  }));
-  return map;
+function openSkillModal(memberId) {
+  const member = state.find(m => m.id === memberId);
+  const suggestion = SKILL_SUGGESTIONS[memberId];
+  if (!member || !suggestion) return;
+  pendingSuggestion = { memberId, suggestion };
+  document.getElementById('skill-modal-title').textContent = suggestion.name;
+  document.getElementById('skill-modal-owner').innerHTML = '&#128100; ' + member.name + ' · ' + member.role;
+  document.getElementById('skill-modal-desc').textContent = suggestion.desc;
+  document.getElementById('skill-modal-triggers').innerHTML = suggestion.triggers.map(t =>
+    `<span class="trigger-pill">${t}</span>`).join('');
+  openModal('skill-modal');
 }
-function getConflicts() { return Object.entries(getAllSkillsMap()).filter(([,n])=>n.length>1); }
+
+function downloadAndAdd() {
+  if (!pendingSuggestion) return;
+  const { memberId, suggestion } = pendingSuggestion;
+  const member = state.find(m => m.id === memberId);
+  if (!member) return;
+  if (member.skills.length >= MAX_SKILLS) {
+    closeModal('skill-modal');
+    showToast('Limite de ' + MAX_SKILLS + ' skills atingido para ' + member.name);
+    return;
+  }
+  const norm = suggestion.name.toLowerCase().trim();
+  const existing = getAllSkillsMap()[norm];
+  const conflictOwner = existing ? existing.find(n => n !== member.name) : null;
+  const doIt = async () => {
+    const blob = new Blob([suggestion.file], { type: 'text/markdown' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = suggestion.name.toLowerCase().replace(/\s+/g, '-') + '.md';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    member.skills.push(suggestion.name);
+    setCardSaving(memberId, true);
+    const ok = await saveState('update: add skill ' + suggestion.name);
+    setCardSaving(memberId, false);
+    if (ok) { render(); showToast('Skill adicionada e arquivo baixado!'); }
+    else    { member.skills.pop(); render(); }
+    pendingSuggestion = null;
+    closeModal('skill-modal');
+  };
+  if (conflictOwner) {
+    closeModal('skill-modal');
+    document.getElementById('conflict-msg').innerHTML =
+      'A skill <strong>"' + suggestion.name + '"</strong> já está registrada para <strong>' + conflictOwner + '</strong>. Deseja registrar mesmo assim?';
+    document.getElementById('conflict-confirm').onclick = () => { closeModal('conflict-modal'); doIt(); };
+    openModal('conflict-modal');
+  } else { doIt(); }
+}
 
 async function doAddSkill(memberId, skillName) {
   const member = state.find(m=>m.id===memberId);
@@ -417,10 +823,10 @@ async function tryAddSkill(memberId) {
   const conflictOwner = existing ? existing.find(n=>n!==member.name) : null;
   input.value = '';
   if (conflictOwner) {
-    openConflictModal(
-      'A skill <strong>"'+val+'"</strong> já está registrada para <strong>'+conflictOwner+'</strong>.<br><br>Deseja registrar mesmo assim?',
-      () => doAddSkill(memberId, val)
-    );
+    document.getElementById('conflict-msg').innerHTML =
+      'A skill <strong>"'+val+'"</strong> já está registrada para <strong>'+conflictOwner+'</strong>. Deseja registrar mesmo assim?';
+    document.getElementById('conflict-confirm').onclick = () => { closeModal('conflict-modal'); doAddSkill(memberId, val); };
+    openModal('conflict-modal');
   } else { doAddSkill(memberId, val); }
 }
 
@@ -443,7 +849,6 @@ async function clearAll() {
   if (ok) { render(); showToast('Todas as skills foram removidas'); }
 }
 
-// ── RENDER ────────────────────────────────────────────────────
 function renderStats() {
   const total = state.reduce((a,m)=>a+m.skills.length,0);
   const withSkills = state.filter(m=>m.skills.length>0).length;
@@ -456,20 +861,22 @@ function renderStats() {
     <div class="stat-card"><div class="stat-label">Slots disponíveis</div><div class="stat-value">${available||33}</div></div>
     <div class="stat-card"><div class="stat-label">Conflitos</div><div class="stat-value ${conflicts>0?'red':''}">${conflicts}</div></div>`;
 }
+
 function renderConflicts() {
   const conflicts = getConflicts();
   const banner = document.getElementById('conflict-banner');
   if (!conflicts.length) { banner.classList.remove('show'); return; }
   banner.classList.add('show');
   const links = conflicts.map(([s, names]) => {
-    const memberIds = names.map(name => {
+    const memberLinks = names.map(name => {
       const m = state.find(x => x.name === name);
-      return m ? `<a href="#card-${m.id}" onclick="scrollToCard(${m.id})" style="color:var(--red);font-weight:600;text-decoration:underline;cursor:pointer;">${name}</a>` : name;
+      return m ? `<a onclick="scrollToCard(${m.id})">${name}</a>` : name;
     }).join(' e ');
-    return `"${s}" → ${memberIds}`;
+    return `"${s}" → ${memberLinks}`;
   }).join(' · ');
   banner.innerHTML = '<span>⚠</span><div><strong>Conflitos:</strong> ' + links + '</div>';
 }
+
 function render() {
   renderStats(); renderConflicts();
   const search = document.getElementById('search-input').value.toLowerCase();
@@ -486,16 +893,19 @@ function render() {
   if (!filtered.length) { area.innerHTML='<div class="empty">Nenhum colaborador encontrado.</div>'; return; }
   area.innerHTML = TEAM_ORDER.filter(t=>grouped[t].length>0).map(team => {
     const meta = TEAM_META[team]||{};
+    const label = TEAM_LABELS[team] || team;
     return `<div class="team-section">
       <div class="team-header">
         <span class="team-dot ${meta.dot}"></span>
-        <span class="team-name">${team}</span>
+        <span class="team-name">${label}</span>
         <span class="team-count">${grouped[team].length} pessoa${grouped[team].length!==1?'s':''}</span>
       </div>
       <div class="members-grid">
         ${grouped[team].map(m=>{
           const hasConflict = m.skills.some(s=>conflictKeys.has(s.toLowerCase().trim()));
           const slotsLeft = MAX_SKILLS - m.skills.length;
+          const suggestion = SKILL_SUGGESTIONS[m.id];
+          const suggestionUsed = suggestion && m.skills.some(s => s.toLowerCase() === suggestion.name.toLowerCase());
           return `<div class="member-card${hasConflict?' has-conflict':''}" id="card-${m.id}">
             <div class="card-top">
               <div class="avatar ${meta.av}">${getInitials(m.name)}</div>
@@ -514,8 +924,18 @@ function render() {
               }).join('')}</div>`:''}
               ${slotsLeft>0
                 ?`<div>
-                    <div class="add-row"><input type="text" id="inp-${m.id}" placeholder="Adicionar skill e pressionar Enter..." onkeydown="if(event.key==='Enter') tryAddSkill(${m.id})" /><button onclick="tryAddSkill(${m.id})">+ Adicionar</button></div>
-                    ${m.skills.length === 0 && SKILL_SUGGESTIONS[m.id] ? `<div style="margin-top:6px;font-size:12px;color:var(--text-faint);">Sugestão: <span onclick="useSuggestion(${m.id})" style="color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:500;">${SKILL_SUGGESTIONS[m.id]}</span></div>` : ''}
+                    <div class="add-row">
+                      <input type="text" id="inp-${m.id}" placeholder="Adicionar skill e pressionar Enter..." onkeydown="if(event.key==='Enter') tryAddSkill(${m.id})" />
+                      <button onclick="tryAddSkill(${m.id})">+ Adicionar</button>
+                    </div>
+                    ${suggestion && !suggestionUsed ? `
+                    <div class="suggestion-row">
+                      <span class="suggestion-label">Sugestão:</span>
+                      <button class="suggestion-btn" onclick="openSkillModal(${m.id})">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        ${suggestion.name}
+                      </button>
+                    </div>` : ''}
                   </div>`
                 :`<div class="full-badge">✓ ${MAX_SKILLS} skills registradas</div>`}
             </div>
@@ -526,54 +946,14 @@ function render() {
   }).join('');
 }
 
-['conflict-modal','clear-modal'].forEach(id=>{
+['skill-modal','conflict-modal','clear-modal'].forEach(id=>{
   document.getElementById(id).addEventListener('click',function(e){ if(e.target===this) closeModal(id); });
 });
 
-function showTokenScreen() {
-  document.getElementById('loading-screen').innerHTML = `
-    <div style="background:#fff;border-radius:14px;padding:2rem;width:460px;max-width:92vw;box-shadow:0 4px 24px rgba(0,0,0,0.1);">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
-        <div style="width:28px;height:28px;background:#1A1917;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:11px;color:#F5F4F0;font-weight:500;">SK</div>
-        <span style="font-size:15px;font-weight:600;color:#1A1917;">Painel de Skills — Predize</span>
-      </div>
-      <p style="font-size:13px;color:#6B6963;margin-bottom:6px;">Cole seu GitHub Personal Access Token para conectar ao banco de dados.</p>
-      <p style="font-size:12px;color:#A8A59F;margin-bottom:1rem;">O token fica salvo apenas neste navegador e nunca é enviado para terceiros.</p>
-      <input type="password" id="token-input" placeholder="ghp_..." 
-        style="width:100%;padding:9px 12px;border:1px solid rgba(0,0,0,0.16);border-radius:7px;font-family:monospace;font-size:13px;color:#1A1917;outline:none;margin-bottom:10px;"
-        onkeydown="if(event.key==='Enter') saveToken()" />
-      <button onclick="saveToken()"
-        style="width:100%;background:#1A1917;color:#F5F4F0;border:none;border-radius:7px;padding:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">
-        Conectar
-      </button>
-      <p id="token-error" style="font-size:12px;color:#B83232;margin-top:8px;display:none;">Token inválido ou sem permissão. Verifique e tente novamente.</p>
-    </div>`;
-  document.getElementById('loading-screen').style.display = 'flex';
-}
-
-async function saveToken() {
-  const input = document.getElementById('token-input');
-  if (!input) return;
-  const val = input.value.trim();
-  if (!val.startsWith('ghp_') && !val.startsWith('github_pat_')) {
-    document.getElementById('token-error').style.display = 'block';
-    return;
-  }
-  localStorage.setItem('predize_gh_token', val);
-  // Recarrega ghHeaders com o novo token
-  ghHeaders['Authorization'] = 'token ' + val;
-  document.getElementById('loading-screen').innerHTML = '<div class="spinner"></div><div class="loading-text">Conectando...</div>';
-  fetchData();
-}
-
-// Verifica token antes de iniciar
-(function() {
+(function init() {
   const token = localStorage.getItem('predize_gh_token') || '';
-  if (!token) {
-    showTokenScreen();
-  } else {
-    fetchData();
-  }
+  if (!token) { showTokenScreen(); }
+  else { fetchData(); }
 })();
 </script>
 </body>
