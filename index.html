@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Painel de Skills — Predize</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F5F4F0; --surface: #FFFFFF; --surface2: #EEEDE8;
+    --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.16);
+    --text: #1A1917; --text-muted: #6B6963; --text-faint: #A8A59F;
+    --accent: #1A1917; --accent-fg: #F5F4F0;
+    --green: #1D7A4F; --green-bg: #E3F5ED;
+    --amber: #8A5C00; --amber-bg: #FFF3D6;
+    --red: #B83232; --red-bg: #FDEAEA;
+    --radius: 10px; --radius-lg: 14px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; line-height: 1.6; }
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; gap: 12px; }
+  .topbar-left { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .logo-mark { width: 28px; height: 28px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-fg); font-weight: 500; }
+  .topbar h1 { font-size: 14px; font-weight: 600; }
+  .topbar-sub { font-size: 12px; color: var(--text-muted); margin-left: 8px; padding-left: 8px; border-left: 1px solid var(--border-strong); }
+  .topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .sync-status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); padding: 4px 10px; border: 1px solid var(--border); border-radius: 20px; background: var(--bg); }
+  .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-faint); flex-shrink: 0; transition: background 0.3s; }
+  .sync-dot.ok { background: var(--green); }
+  .sync-dot.loading { background: var(--amber); animation: pulse 1s infinite; }
+  .sync-dot.error { background: var(--red); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .btn-sm { border: 1px solid var(--border-strong); background: transparent; border-radius: 7px; padding: 5px 14px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--text-muted); cursor: pointer; transition: all 0.15s; font-weight: 500; }
+  .btn-sm:hover { background: var(--surface2); color: var(--text); }
+  .btn-danger { color: var(--red); border-color: #F5B8B8; }
+  .btn-danger:hover { background: var(--red-bg); color: var(--red); }
+  .btn-accent { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+  .btn-accent:hover { opacity: 0.85; color: var(--accent-fg); background: var(--accent); }
+  .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 1.75rem; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
+  .stat-label { font-size: 11px; font-weight: 500; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+  .stat-value { font-size: 26px; font-weight: 600; color: var(--text); font-family: 'DM Mono', monospace; }
+  .stat-value.red { color: var(--red); }
+  .stat-value.green { color: var(--green); }
+  .conflict-banner { background: var(--red-bg); border: 1px solid #F5B8B8; border-radius: var(--radius); padding: 10px 16px; font-size: 13px; color: var(--red); margin-bottom: 1.25rem; display: none; align-items: flex-start; gap: 8px; }
+  .conflict-banner.show { display: flex; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
+  .filter-pill { border: 1px solid var(--border-strong); background: transparent; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--text-muted); cursor: pointer; transition: all 0.15s; font-weight: 500; }
+  .filter-pill:hover { background: var(--surface2); color: var(--text); }
+  .filter-pill.active { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+  .search-wrap { flex: 1; min-width: 200px; position: relative; }
+  .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); opacity: 0.4; pointer-events: none; }
+  .search-wrap input { width: 100%; padding: 7px 12px 7px 32px; border: 1px solid var(--border-strong); border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; background: var(--surface); color: var(--text); outline: none; transition: border 0.15s; }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap input::placeholder { color: var(--text-faint); }
+  .team-section { margin-bottom: 2rem; }
+  .team-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .team-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .team-name { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .team-count { font-size: 11px; color: var(--text-faint); font-family: 'DM Mono', monospace; }
+  .members-grid { display: flex; flex-direction: column; gap: 8px; }
+  .member-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow); transition: border-color 0.15s, box-shadow 0.15s; }
+  .member-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+  .member-card.has-conflict { border-left: 3px solid var(--red); }
+  .member-card.saving { opacity: 0.6; pointer-events: none; }
+  .card-top { display: flex; align-items: center; gap: 12px; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; font-family: 'DM Mono', monospace; }
+  .member-info { flex: 1; min-width: 0; }
+  .member-name { font-size: 14px; font-weight: 600; }
+  .member-role { font-size: 12px; color: var(--text-muted); }
+  .slots-indicator { display: flex; gap: 4px; align-items: center; }
+  .slot-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--border-strong); transition: all 0.2s; }
+  .slot-dot.filled { border-color: transparent; }
+  .slot-dot.conflict-dot { background: var(--red) !important; border-color: transparent; }
+  .card-body { margin-top: 10px; }
+  .skills-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .skill-chip { display: inline-flex; align-items: center; gap: 5px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 12px; font-weight: 500; }
+  .skill-chip.conflict-chip { background: var(--red-bg); border-color: #F5B8B8; color: var(--red); }
+  .skill-chip button { background: none; border: none; cursor: pointer; padding: 0; color: var(--text-faint); display: flex; align-items: center; transition: color 0.1s; font-size: 14px; line-height: 1; }
+  .skill-chip button:hover { color: var(--red); }
+  .add-row { display: flex; gap: 6px; }
+  .add-row input { flex: 1; padding: 6px 12px; border: 1px dashed var(--border-strong); border-radius: 7px; font-family: 'DM Sans', sans-serif; font-size: 12px; background: var(--bg); color: var(--text); outline: none; transition: border 0.15s; }
+  .add-row input:focus { border-color: var(--accent); border-style: solid; background: var(--surface); }
+  .add-row input::placeholder { color: var(--text-faint); }
+  .add-row button { background: var(--accent); color: var(--accent-fg); border: none; border-radius: 7px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; white-space: nowrap; }
+  .add-row button:hover { opacity: 0.8; }
+  .full-badge { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 4px; font-weight: 500; }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 200; align-items: center; justify-content: center; }
+  .modal-overlay.show { display: flex; }
+  .modal { background: var(--surface); border-radius: var(--radius-lg); padding: 1.5rem; width: 460px; max-width: 92vw; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  .modal h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .modal p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
+  .modal-divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+  .loading-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 500; }
+  .spinner { width: 28px; height: 28px; border: 2px solid var(--border-strong); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 13px; color: var(--text-muted); }
+  .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 300; background: var(--text); color: var(--accent-fg); border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 500; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(6px); transition: all 0.25s; pointer-events: none; max-width: 340px; }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .empty { text-align: center; padding: 3rem 1rem; color: var(--text-faint); font-size: 14px; }
+  .dot-onboarding{background:#378ADD} .dot-mia{background:#1D9E75} .dot-cs{background:#EF9F27} .dot-suporte{background:#D85A30} .dot-coord{background:#7F77DD}
+  .av-onboarding{background:#E6EFFA;color:#185FA5} .av-mia{background:#E3F5ED;color:#1D7A4F} .av-cs{background:#FFF3D6;color:#8A5C00} .av-suporte{background:#FAECE7;color:#8A3820} .av-coord{background:#EEEDFE;color:#534AB7}
+  .slot-onboarding.filled{background:#378ADD} .slot-mia.filled{background:#1D9E75} .slot-cs.filled{background:#EF9F27} .slot-suporte.filled{background:#D85A30} .slot-coord.filled{background:#7F77DD}
+  @media(max-width:640px){.stats-grid{grid-template-columns:repeat(2,1fr)}.topbar-sub,.sync-status{display:none}.container{padding:1rem}.topbar{padding:0 1rem}}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loading-screen">
+  <div class="spinner"></div>
+  <div class="loading-text">Carregando painel...</div>
+</div>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo-mark">SK</div>
+    <h1>Painel de Skills</h1>
+    <span class="topbar-sub">Predize · Serviços</span>
+  </div>
+  <div class="topbar-right">
+    <div class="sync-status" id="sync-status">
+      <span class="sync-dot loading" id="sync-dot"></span>
+      <span id="sync-label">Conectando...</span>
+    </div>
+    <button class="btn-sm" onclick="fetchData()">↻ Atualizar</button>
+    <button class="btn-sm btn-danger" onclick="openClearModal()">Limpar tudo</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="stats-grid" id="stats-area"></div>
+  <div class="conflict-banner" id="conflict-banner"></div>
+  <div class="toolbar">
+    <div style="display:flex;gap:4px;flex-wrap:wrap;">
+      <button class="filter-pill active" onclick="setFilter('all',this)">Todos</button>
+      <button class="filter-pill" onclick="setFilter('Onboarding',this)">Onboarding</button>
+      <button class="filter-pill" onclick="setFilter('MIA Service',this)">MIA Service</button>
+      <button class="filter-pill" onclick="setFilter('CS',this)">CS</button>
+      <button class="filter-pill" onclick="setFilter('Suporte',this)">Suporte</button>
+      <button class="filter-pill" onclick="setFilter('Coordenação',this)">Coordenação</button>
+    </div>
+    <div class="search-wrap">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Buscar por nome, cargo ou skill..." oninput="render()" />
+    </div>
+  </div>
+  <div id="main-area"></div>
+</div>
+
+<!-- Modal: Conflito -->
+<div class="modal-overlay" id="conflict-modal">
+  <div class="modal">
+    <h2>Skill duplicada</h2>
+    <p id="conflict-msg"></p>
+    <div class="modal-actions">
+      <button class="btn-sm" onclick="closeModal('conflict-modal')">Cancelar</button>
+      <button class="btn-sm btn-accent" id="conflict-confirm">Registrar mesmo assim</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Limpar -->
+<div class="modal-overlay" id="clear-modal">
+  <div class="modal">
+    <h2>Limpar todas as skills?</h2>
+    <p>Remove todas as skills de todos os colaboradores. Esta ação não pode ser desfeita.</p>
+    <div class="modal-actions">
+      <button class="btn-sm" onclick="closeModal('clear-modal')">Cancelar</button>
+      <button class="btn-sm btn-danger" onclick="clearAll()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+const JSONBIN_KEY  = '$2a$10$dTggLgJN0/f4DMJLdrxuqeHGyF7xowxtsU7VCFK5y9LNaKRNP0On.';
+const JSONBIN_URL  = 'https://api.jsonbin.io/v3/bins';
+const BIN_ID_KEY   = 'predize_skills_bin_id';
+const POLL_MS      = 20000;
+const MAX_SKILLS   = 3;
+
+const MEMBERS_DEFAULT = [
+  { id:1,  name:'José Alberto', role:'Analista de Onboarding',  team:'Onboarding'  },
+  { id:2,  name:'Amanda Muniz', role:'Analista de Onboarding',  team:'Onboarding'  },
+  { id:3,  name:'Paulo Sergio', role:'Analista de Onboarding',  team:'Onboarding'  },
+  { id:4,  name:'Rose',         role:'MIA Service',             team:'MIA Service' },
+  { id:5,  name:'Fhilipe',      role:'MIA Service',             team:'MIA Service' },
+  { id:6,  name:'Aline',        role:'CS',                      team:'CS'          },
+  { id:7,  name:'Carol',        role:'CS',                      team:'CS'          },
+  { id:8,  name:'João',         role:'CS',                      team:'CS'          },
+  { id:9,  name:'Natalia',      role:'CS',                      team:'CS'          },
+  { id:10, name:'Isadora',      role:'Suporte',                 team:'Suporte'     },
+  { id:11, name:'Higor',        role:'Coordenador de Serviços', team:'Coordenação' }
+];
+
+const TEAM_META = {
+  'Onboarding': {dot:'dot-onboarding',av:'av-onboarding',slot:'slot-onboarding'},
+  'MIA Service':{dot:'dot-mia',        av:'av-mia',       slot:'slot-mia'       },
+  'CS':         {dot:'dot-cs',         av:'av-cs',        slot:'slot-cs'        },
+  'Suporte':    {dot:'dot-suporte',    av:'av-suporte',   slot:'slot-suporte'   },
+  'Coordenação':{dot:'dot-coord',      av:'av-coord',     slot:'slot-coord'     }
+};
+const TEAM_ORDER = ['Onboarding','MIA Service','CS','Suporte','Coordenação'];
+
+let state = [];
+let binId = '';
+let activeFilter = 'all';
+let pollTimer = null;
+
+// ── JSONBIN API ───────────────────────────────────────────────
+const headers = {
+  'Content-Type': 'application/json',
+  'X-Master-Key': JSONBIN_KEY
+};
+
+async function initBin() {
+  // Verifica se já existe um bin salvo
+  binId = localStorage.getItem(BIN_ID_KEY) || '';
+  if (binId) {
+    await fetchData();
+    return;
+  }
+  // Cria um bin novo com os dados padrão
+  setSyncStatus('loading', 'Criando banco...');
+  const data = MEMBERS_DEFAULT.map(m => ({ ...m, skills: [] }));
+  try {
+    const res = await fetch(JSONBIN_URL, {
+      method: 'POST',
+      headers: { ...headers, 'X-Bin-Name': 'predize-skills', 'X-Bin-Private': 'false' },
+      body: JSON.stringify({ members: data })
+    });
+    const json = await res.json();
+    binId = json.metadata.id;
+    localStorage.setItem(BIN_ID_KEY, binId);
+    state = data;
+    setSyncStatus('ok', 'Banco criado');
+    hideLoading();
+    render();
+    startPolling();
+  } catch(e) {
+    setSyncStatus('error', 'Erro ao criar banco');
+    hideLoading();
+    showToast('Erro ao conectar com JSONBin. Verifique sua conexão.');
+  }
+}
+
+async function fetchData(silent) {
+  if (!binId) return;
+  if (!silent) setSyncStatus('loading', 'Sincronizando...');
+  try {
+    const res = await fetch(JSONBIN_URL + '/' + binId + '/latest', { headers });
+    const json = await res.json();
+    state = json.record.members;
+    const now = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('ok', 'Atualizado ' + now);
+    hideLoading();
+    render();
+    if (!pollTimer) startPolling();
+  } catch(e) {
+    setSyncStatus('error', 'Sem conexão');
+    hideLoading();
+    if (!silent) showToast('Erro ao carregar dados.');
+  }
+}
+
+async function saveState() {
+  if (!binId) return false;
+  setSyncStatus('loading', 'Salvando...');
+  try {
+    const res = await fetch(JSONBIN_URL + '/' + binId, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify({ members: state })
+    });
+    const json = await res.json();
+    state = json.record.members;
+    const now = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('ok', 'Salvo ' + now);
+    return true;
+  } catch(e) {
+    setSyncStatus('error', 'Erro ao salvar');
+    showToast('Erro ao salvar. Tente novamente.');
+    return false;
+  }
+}
+
+function startPolling() {
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(() => fetchData(true), POLL_MS);
+}
+
+// ── UI HELPERS ────────────────────────────────────────────────
+function setSyncStatus(s, label) {
+  document.getElementById('sync-dot').className = 'sync-dot ' + s;
+  document.getElementById('sync-label').textContent = label;
+}
+function hideLoading() { document.getElementById('loading-screen').style.display = 'none'; }
+function showToast(msg, dur=3500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+function openClearModal() { document.getElementById('clear-modal').classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+function openConflictModal(msg, onConfirm) {
+  document.getElementById('conflict-msg').innerHTML = msg;
+  document.getElementById('conflict-confirm').onclick = () => { closeModal('conflict-modal'); onConfirm(); };
+  document.getElementById('conflict-modal').classList.add('show');
+}
+function setCardSaving(id, saving) {
+  const c = document.getElementById('card-' + id);
+  if (c) c.classList.toggle('saving', saving);
+}
+function getInitials(name) { return name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase(); }
+function setFilter(team, btn) {
+  activeFilter = team;
+  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); render();
+}
+
+// ── LÓGICA ────────────────────────────────────────────────────
+function getAllSkillsMap() {
+  const map = {};
+  state.forEach(m => m.skills.forEach(s => {
+    const k = s.toLowerCase().trim();
+    if (!map[k]) map[k] = [];
+    if (!map[k].includes(m.name)) map[k].push(m.name);
+  }));
+  return map;
+}
+function getConflicts() { return Object.entries(getAllSkillsMap()).filter(([,n])=>n.length>1); }
+
+async function doAddSkill(memberId, skillName) {
+  const member = state.find(m => m.id === memberId);
+  if (!member) return;
+  member.skills.push(skillName);
+  setCardSaving(memberId, true);
+  const ok = await saveState();
+  setCardSaving(memberId, false);
+  if (ok) { render(); showToast('Skill "' + skillName + '" adicionada para ' + member.name); }
+  else { member.skills.pop(); render(); }
+}
+
+async function tryAddSkill(memberId) {
+  const input = document.getElementById('inp-' + memberId);
+  if (!input) return;
+  const val = input.value.trim();
+  if (!val) return;
+  const member = state.find(m => m.id === memberId);
+  if (!member) return;
+  if (member.skills.length >= MAX_SKILLS) { showToast('Limite de ' + MAX_SKILLS + ' skills atingido'); return; }
+  const norm = val.toLowerCase().trim();
+  const existing = getAllSkillsMap()[norm];
+  const conflictOwner = existing ? existing.find(n => n !== member.name) : null;
+  input.value = '';
+  if (conflictOwner) {
+    openConflictModal(
+      'A skill <strong>"'+val+'"</strong> já está registrada para <strong>'+conflictOwner+'</strong>.<br><br>Deseja registrar mesmo assim?',
+      () => doAddSkill(memberId, val)
+    );
+  } else { doAddSkill(memberId, val); }
+}
+
+async function removeSkill(memberId, idx) {
+  const member = state.find(m => m.id === memberId);
+  if (!member) return;
+  const removed = member.skills[idx];
+  member.skills.splice(idx, 1);
+  setCardSaving(memberId, true);
+  const ok = await saveState();
+  setCardSaving(memberId, false);
+  if (ok) { render(); showToast('Skill "' + removed + '" removida'); }
+  else { member.skills.splice(idx, 0, removed); render(); }
+}
+
+async function clearAll() {
+  closeModal('clear-modal');
+  state.forEach(m => m.skills = []);
+  const ok = await saveState();
+  if (ok) { render(); showToast('Todas as skills foram removidas'); }
+}
+
+// ── RENDER ────────────────────────────────────────────────────
+function renderStats() {
+  const total = state.reduce((a,m)=>a+m.skills.length,0);
+  const withSkills = state.filter(m=>m.skills.length>0).length;
+  const available = state.length * MAX_SKILLS - total;
+  const conflicts = getConflicts().length;
+  document.getElementById('stats-area').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Colaboradores</div><div class="stat-value">${state.length||11}</div></div>
+    <div class="stat-card"><div class="stat-label">Skills registradas</div><div class="stat-value">${total}</div></div>
+    <div class="stat-card"><div class="stat-label">Com skills</div><div class="stat-value ${withSkills>0?'green':''}">${withSkills}</div></div>
+    <div class="stat-card"><div class="stat-label">Slots disponíveis</div><div class="stat-value">${available||33}</div></div>
+    <div class="stat-card"><div class="stat-label">Conflitos</div><div class="stat-value ${conflicts>0?'red':''}">${conflicts}</div></div>`;
+}
+function renderConflicts() {
+  const conflicts = getConflicts();
+  const banner = document.getElementById('conflict-banner');
+  if (!conflicts.length) { banner.classList.remove('show'); return; }
+  banner.classList.add('show');
+  banner.innerHTML = '<span>⚠</span><div><strong>Conflitos:</strong> '+conflicts.map(([s,names])=>'"'+s+'" → '+names.join(' e ')).join(' · ')+'</div>';
+}
+function render() {
+  renderStats(); renderConflicts();
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const conflictKeys = new Set(getConflicts().map(([k])=>k));
+  const filtered = state.filter(m => {
+    const matchTeam = activeFilter==='all' || m.team===activeFilter;
+    const matchSearch = !search || m.name.toLowerCase().includes(search) || m.role.toLowerCase().includes(search) || m.skills.some(s=>s.toLowerCase().includes(search));
+    return matchTeam && matchSearch;
+  });
+  const grouped = {};
+  TEAM_ORDER.forEach(t=>{ grouped[t]=[]; });
+  filtered.forEach(m=>{ if(grouped[m.team]) grouped[m.team].push(m); });
+  const area = document.getElementById('main-area');
+  if (!filtered.length) { area.innerHTML='<div class="empty">Nenhum colaborador encontrado.</div>'; return; }
+  area.innerHTML = TEAM_ORDER.filter(t=>grouped[t].length>0).map(team => {
+    const meta = TEAM_META[team]||{};
+    return `<div class="team-section">
+      <div class="team-header">
+        <span class="team-dot ${meta.dot}"></span>
+        <span class="team-name">${team}</span>
+        <span class="team-count">${grouped[team].length} pessoa${grouped[team].length!==1?'s':''}</span>
+      </div>
+      <div class="members-grid">
+        ${grouped[team].map(m => {
+          const hasConflict = m.skills.some(s=>conflictKeys.has(s.toLowerCase().trim()));
+          const slotsLeft = MAX_SKILLS - m.skills.length;
+          return `<div class="member-card${hasConflict?' has-conflict':''}" id="card-${m.id}">
+            <div class="card-top">
+              <div class="avatar ${meta.av}">${getInitials(m.name)}</div>
+              <div class="member-info"><div class="member-name">${m.name}</div><div class="member-role">${m.role}</div></div>
+              <div class="slots-indicator">
+                ${Array.from({length:MAX_SKILLS},(_,i)=>{
+                  const s=m.skills[i]; const isc=s&&conflictKeys.has(s.toLowerCase().trim());
+                  return `<span class="slot-dot ${meta.slot} ${i<m.skills.length?'filled':''} ${isc?'conflict-dot':''}"></span>`;
+                }).join('')}
+              </div>
+            </div>
+            <div class="card-body">
+              ${m.skills.length>0?`<div class="skills-row">${m.skills.map((s,i)=>{
+                const isc=conflictKeys.has(s.toLowerCase().trim());
+                return `<span class="skill-chip${isc?' conflict-chip':''}">${s}<button onclick="removeSkill(${m.id},${i})" title="Remover">✕</button></span>`;
+              }).join('')}</div>`:''}
+              ${slotsLeft>0
+                ?`<div class="add-row"><input type="text" id="inp-${m.id}" placeholder="Adicionar skill e pressionar Enter..." onkeydown="if(event.key==='Enter') tryAddSkill(${m.id})" /><button onclick="tryAddSkill(${m.id})">+ Adicionar</button></div>`
+                :`<div class="full-badge">✓ ${MAX_SKILLS} skills registradas</div>`}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+['conflict-modal','clear-modal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e){ if(e.target===this) closeModal(id); });
+});
+
+initBin();
+</script>
+</body>
+</html>
