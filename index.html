@@ -177,7 +177,7 @@
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────
-const GH_TOKEN  = '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';
+const GH_TOKEN  = localStorage.getItem('predize_gh_token') || '';
 const GH_OWNER  = 'fhilipe99';
 const GH_REPO   = 'painel-skills';
 const GH_FILE   = 'data.json';
@@ -213,7 +213,7 @@ let fileSha = '';
 let activeFilter = 'all';
 let pollTimer    = null;
 
-const ghHeaders = {
+let ghHeaders = {
   'Authorization': 'token ' + GH_TOKEN,
   'Accept': 'application/vnd.github.v3+json',
   'Content-Type': 'application/json'
@@ -478,7 +478,51 @@ function render() {
   document.getElementById(id).addEventListener('click',function(e){ if(e.target===this) closeModal(id); });
 });
 
-fetchData();
+function showTokenScreen() {
+  document.getElementById('loading-screen').innerHTML = `
+    <div style="background:#fff;border-radius:14px;padding:2rem;width:460px;max-width:92vw;box-shadow:0 4px 24px rgba(0,0,0,0.1);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+        <div style="width:28px;height:28px;background:#1A1917;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:11px;color:#F5F4F0;font-weight:500;">SK</div>
+        <span style="font-size:15px;font-weight:600;color:#1A1917;">Painel de Skills — Predize</span>
+      </div>
+      <p style="font-size:13px;color:#6B6963;margin-bottom:6px;">Cole seu GitHub Personal Access Token para conectar ao banco de dados.</p>
+      <p style="font-size:12px;color:#A8A59F;margin-bottom:1rem;">O token fica salvo apenas neste navegador e nunca é enviado para terceiros.</p>
+      <input type="password" id="token-input" placeholder="ghp_..." 
+        style="width:100%;padding:9px 12px;border:1px solid rgba(0,0,0,0.16);border-radius:7px;font-family:monospace;font-size:13px;color:#1A1917;outline:none;margin-bottom:10px;"
+        onkeydown="if(event.key==='Enter') saveToken()" />
+      <button onclick="saveToken()"
+        style="width:100%;background:#1A1917;color:#F5F4F0;border:none;border-radius:7px;padding:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">
+        Conectar
+      </button>
+      <p id="token-error" style="font-size:12px;color:#B83232;margin-top:8px;display:none;">Token inválido ou sem permissão. Verifique e tente novamente.</p>
+    </div>`;
+  document.getElementById('loading-screen').style.display = 'flex';
+}
+
+async function saveToken() {
+  const input = document.getElementById('token-input');
+  if (!input) return;
+  const val = input.value.trim();
+  if (!val.startsWith('ghp_') && !val.startsWith('github_pat_')) {
+    document.getElementById('token-error').style.display = 'block';
+    return;
+  }
+  localStorage.setItem('predize_gh_token', val);
+  // Recarrega ghHeaders com o novo token
+  ghHeaders['Authorization'] = 'token ' + val;
+  document.getElementById('loading-screen').innerHTML = '<div class="spinner"></div><div class="loading-text">Conectando...</div>';
+  fetchData();
+}
+
+// Verifica token antes de iniciar
+(function() {
+  const token = localStorage.getItem('predize_gh_token') || '';
+  if (!token) {
+    showTokenScreen();
+  } else {
+    fetchData();
+  }
+})();
 </script>
 </body>
 </html>
