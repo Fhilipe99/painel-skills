@@ -186,18 +186,33 @@ const POLL_MS   = 20000;
 const MAX_SKILLS = 3;
 
 const MEMBERS_DEFAULT = [
-  { id:1,  name:'José Alberto', role:'Analista de Onboarding',  team:'Onboarding'  },
+  { id:1,  name:'Jose Alberto', role:'Analista de Onboarding',  team:'Onboarding'  },
   { id:2,  name:'Amanda Muniz', role:'Analista de Onboarding',  team:'Onboarding'  },
   { id:3,  name:'Paulo Sergio', role:'Analista de Onboarding',  team:'Onboarding'  },
   { id:4,  name:'Rose',         role:'MIA Service',             team:'MIA Service' },
   { id:5,  name:'Fhilipe',      role:'MIA Service',             team:'MIA Service' },
   { id:6,  name:'Aline',        role:'CS',                      team:'CS'          },
   { id:7,  name:'Carol',        role:'CS',                      team:'CS'          },
-  { id:8,  name:'João',         role:'CS',                      team:'CS'          },
+  { id:8,  name:'Joao',         role:'CS',                      team:'CS'          },
   { id:9,  name:'Natalia',      role:'CS',                      team:'CS'          },
   { id:10, name:'Isadora',      role:'Suporte',                 team:'Suporte'     },
-  { id:11, name:'Higor',        role:'Coordenador de Serviços', team:'Coordenação' }
+  { id:11, name:'Higor',        role:'Coordenador de Servicos', team:'Coordenacao' }
 ];
+
+// Sugestão de skill inicial por colaborador (única por pessoa)
+const SKILL_SUGGESTIONS = {
+  1:  'Configuração de fluxo de onboarding',   // Jose Alberto
+  2:  'Gestão de expectativas do cliente',      // Amanda Muniz
+  3:  'Diagnóstico de integrações de marketplace', // Paulo Sergio
+  4:  'Curadoria de contextos MIA',             // Rose
+  5:  'Análise de redução de esforço MIA',      // Fhilipe
+  6:  'Gestão de relacionamento pós-venda',     // Aline
+  7:  'Mapeamento de jornada do cliente',       // Carol
+  8:  'Resolução de disputas em marketplace',   // Joao
+  9:  'Monitoramento de SLA',                   // Natalia
+  10: 'Triagem e priorização de chamados',      // Isadora
+  11: 'Gestão de indicadores de serviço'        // Higor
+};
 
 const TEAM_META = {
   'Onboarding': {dot:'dot-onboarding',av:'av-onboarding',slot:'slot-onboarding'},
@@ -234,7 +249,7 @@ async function fetchData(silent) {
     const json = await res.json();
     fileSha = json.sha || '';
     const raw = (json.content || '').replace(/[\s\n\r]/g, '');
-    const content = raw ? JSON.parse(atob(raw)) : null;
+    const content = raw ? JSON.parse(decodeURIComponent(escape(atob(raw)))) : null;
     if (!content || !content.members) { await initFile(); return; }
     state = content.members;
 
@@ -339,6 +354,33 @@ function setFilter(team, btn) {
   btn.classList.add('active'); render();
 }
 
+function useSuggestion(memberId) {
+  const input = document.getElementById('inp-' + memberId);
+  if (input) {
+    input.value = SKILL_SUGGESTIONS[memberId] || '';
+    input.focus();
+  }
+}
+
+function scrollToCard(memberId) {
+  // Garante que o filtro está em "Todos" para o card aparecer
+  if (activeFilter !== 'all') {
+    activeFilter = 'all';
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-pill[onclick*="all"]').classList.add('active');
+    render();
+  }
+  setTimeout(() => {
+    const card = document.getElementById('card-' + memberId);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.style.outline = '2px solid var(--red)';
+      card.style.outlineOffset = '2px';
+      setTimeout(() => { card.style.outline = ''; card.style.outlineOffset = ''; }, 2000);
+    }
+  }, 100);
+}
+
 // ── LÓGICA ────────────────────────────────────────────────────
 function getAllSkillsMap() {
   const map = {};
@@ -419,7 +461,14 @@ function renderConflicts() {
   const banner = document.getElementById('conflict-banner');
   if (!conflicts.length) { banner.classList.remove('show'); return; }
   banner.classList.add('show');
-  banner.innerHTML = '<span>⚠</span><div><strong>Conflitos:</strong> '+conflicts.map(([s,names])=>'"'+s+'" → '+names.join(' e ')).join(' · ')+'</div>';
+  const links = conflicts.map(([s, names]) => {
+    const memberIds = names.map(name => {
+      const m = state.find(x => x.name === name);
+      return m ? `<a href="#card-${m.id}" onclick="scrollToCard(${m.id})" style="color:var(--red);font-weight:600;text-decoration:underline;cursor:pointer;">${name}</a>` : name;
+    }).join(' e ');
+    return `"${s}" → ${memberIds}`;
+  }).join(' · ');
+  banner.innerHTML = '<span>⚠</span><div><strong>Conflitos:</strong> ' + links + '</div>';
 }
 function render() {
   renderStats(); renderConflicts();
@@ -464,7 +513,10 @@ function render() {
                 return `<span class="skill-chip${isc?' conflict-chip':''}">${s}<button onclick="removeSkill(${m.id},${i})" title="Remover">✕</button></span>`;
               }).join('')}</div>`:''}
               ${slotsLeft>0
-                ?`<div class="add-row"><input type="text" id="inp-${m.id}" placeholder="Adicionar skill e pressionar Enter..." onkeydown="if(event.key==='Enter') tryAddSkill(${m.id})" /><button onclick="tryAddSkill(${m.id})">+ Adicionar</button></div>`
+                ?`<div>
+                    <div class="add-row"><input type="text" id="inp-${m.id}" placeholder="Adicionar skill e pressionar Enter..." onkeydown="if(event.key==='Enter') tryAddSkill(${m.id})" /><button onclick="tryAddSkill(${m.id})">+ Adicionar</button></div>
+                    ${m.skills.length === 0 && SKILL_SUGGESTIONS[m.id] ? `<div style="margin-top:6px;font-size:12px;color:var(--text-faint);">Sugestão: <span onclick="useSuggestion(${m.id})" style="color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:500;">${SKILL_SUGGESTIONS[m.id]}</span></div>` : ''}
+                  </div>`
                 :`<div class="full-badge">✓ ${MAX_SKILLS} skills registradas</div>`}
             </div>
           </div>`;
