@@ -2,7 +2,7 @@
   "members": [
     {
       "id": 1,
-      "name": "JosÃ© Alberto",
+      "name": "JosÃÂ© Alberto",
       "role": "Analista de Onboarding",
       "team": "Onboarding",
       "skills": [
@@ -15,7 +15,8 @@
       "role": "Analista de Onboarding",
       "team": "Onboarding",
       "skills": [
-        "carlos"
+        "carlos",
+        "teste"
       ]
     },
     {
@@ -55,7 +56,7 @@
     },
     {
       "id": 8,
-      "name": "JoÃ£o",
+      "name": "JoÃÂ£o",
       "role": "CS",
       "team": "CS",
       "skills": []
@@ -77,8 +78,8 @@
     {
       "id": 11,
       "name": "Higor",
-      "role": "Coordenador de ServiÃ§os",
-      "team": "CoordenaÃ§Ã£o",
+      "role": "Coordenador de ServiÃÂ§os",
+      "team": "CoordenaÃÂ§ÃÂ£o",
       "skills": []
     }
   ]
