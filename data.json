@@ -5,7 +5,9 @@
       "name": "José Alberto",
       "role": "Analista de Onboarding",
       "team": "Onboarding",
-      "skills": []
+      "skills": [
+        "teste"
+      ]
     },
     {
       "id": 2,
